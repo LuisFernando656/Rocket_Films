@@ -6,7 +6,7 @@ const createUsers = `
     password varchar,
     avatar varchar null,
     created_at timestamp default current_timestamp,
-    updated_at timestamp default current_timastamp
+    updated_at timestamp default current_timestamp
   )
 `
 module.exports = createUsers

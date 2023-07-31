@@ -22,10 +22,10 @@ class UsersControllers {
 
   async update(request, response) {
     const {name, email, password, old_password} = request.body
-    const {id} = request.params
+    const user_id = request.user.id
 
     const database = await sqliteConnection()
-    const user = await database.get('select * from users where id = (?)', [id])
+    const user = await database.get('select * from users where id = (?)', [user_id])
 
     if(!user) {
       throw new AppError('Usuário não encontrado')
@@ -33,7 +33,7 @@ class UsersControllers {
 
     const userWithUpdatedEmail = await  database.get('select * from users where email = (?)', [email])
 
-    if (userWithUpdatedEmail && userWithUpdatedEmail.id !== id){
+    if (userWithUpdatedEmail && userWithUpdatedEmail.id !== user_id){
       throw new AppError('Este email já está cadastrado')
     }
 
@@ -61,7 +61,7 @@ class UsersControllers {
     password = ?,
     updated_at = datetime('now')
     where id = ?`,
-    [user.name, user.email, user.password, id])
+    [user.name, user.email, user.password, user_id])
 
     return response.json()
   }

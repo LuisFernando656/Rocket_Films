@@ -9,9 +9,9 @@ const notesController = new NotesController()
 
 noteRoutes.use(ensureAuthenticated) 
 
-noteRoutes.post('/:user_id', notesController.create)
+noteRoutes.get('/', notesController.index)
+noteRoutes.post('/', notesController.create)
 noteRoutes.get('/:id', notesController.show)
 noteRoutes.delete('/:id', notesController.delete)
-noteRoutes.get('/', notesController.index)
 
 module.exports = noteRoutes
